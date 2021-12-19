@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>your posts</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <a class="logo-text" href="index.html">yourposts</a>
+            </div>
+            <center>  <p style="color:black;font-size:14px;"><b>Please Login to view the posts...</b></p></center>
+
+
+            <div class="login">
+                <form action="">
+                <table class="login-controls">
+                    {% if user.is_authenticated %}
+                    <li style="color:black;font-size:25px;"><b>Hai, {{user.username}}</b></li>
+                    <a class="logout-btn" href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                    <a class="register-btn" href="{% url 'register' %}">Register</a>
+                        <a class="login-btn" href="{% url 'login' %}">Login</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                {% endif %}
+{% if user.is_authenticated %}
+<a class="add-btn" href="{% url 'add_post' %}">Add post</a>&nbsp;&nbsp;
+{% endif %}
+
+                </table>
+            </form>
+            </div>
+        </div>
+
+        <div class="main-body">
+        {% if user.is_authenticated %}
+
+         {% for i in items %}
+           <a href="{% url 'post_view' i.id %}"><img src="{{i.img.url}}" alt="" style="height:250px;width:250px;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<!--             <a href="{% url 'post_view' i.id %}"><b>{{i.title}}</b></a><br>-->
+            {% endfor %}
+        {% endif %}
+
+        </div>
+    </div>
+
+</body>
+</html>
+
